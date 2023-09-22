@@ -2,6 +2,7 @@ package com.thomas.grumble.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +30,22 @@ public class Grumble {
     @JsonIgnoreProperties({"password", "roles", "grumbles", "likedGrumbles", "dislikedGrumbles"})
     private List<UserEntity> dislikingUsers;
 
+    @Column(name = "approval")
+    private String approval;
+
     public Grumble(UserEntity user, String grumble) {
         this.user = user;
         this.grumble = grumble;
         this.likingUsers = new ArrayList<>();
         this.dislikingUsers = new ArrayList<>();
+    }
+
+    public String getApproval() {
+        return approval;
+    }
+
+    public void setApproval(String approval) {
+        this.approval = approval;
     }
 
     public UserEntity getUser() {

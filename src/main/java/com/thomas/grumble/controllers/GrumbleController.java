@@ -96,6 +96,7 @@ public class GrumbleController {
             grumble.setUser(user);
             grumble.setGrumble(addRequest.getContent());
 
+            grumble.setApproval("Pending Approval");
             grumbleRepository.save(grumble);
 
             return ResponseEntity.ok("Grumble created successfully.");
@@ -111,6 +112,21 @@ public class GrumbleController {
             @RequestParam(name = "grumbles", required = false) String grumbles
     ){
         return new ResponseEntity<>(grumbleRepository.findAll(), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "grumbles/verdict")
+    public ResponseEntity<?>grumbleVerdict(@RequestBody VerdictRequest verdictRequest){
+
+        Optional<Grumble> grumbleOptional = grumbleRepository.findById(verdictRequest.getGrumbleID());
+
+        if(grumbleOptional.isEmpty()){
+            return new ResponseEntity<>("This grumble doesn't exist",HttpStatus.NOT_FOUND);
+        }
+
+       Grumble grumble = grumbleOptional.get();
+       grumble.setApproval(verdictRequest.getVerdict());
+       grumbleRepository.save(grumble);
+       return new ResponseEntity<>("You have been judged",HttpStatus.OK);
     }
 
 }
