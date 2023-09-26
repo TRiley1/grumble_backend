@@ -1,6 +1,6 @@
 package com.thomas.grumble.services;
 
-import com.thomas.grumble.models.RegistrationRequest;
+import com.thomas.grumble.requests.RegistrationRequest;
 import com.thomas.grumble.models.UserEntity;
 import com.thomas.grumble.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

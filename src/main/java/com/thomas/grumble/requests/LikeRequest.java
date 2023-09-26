@@ -1,9 +1,9 @@
-package com.thomas.grumble.models;
+package com.thomas.grumble.requests;
 
 import lombok.Data;
 
 @Data
-public class DislikeRequest {
+public class LikeRequest {
     private Long id;
     private String username;
 }

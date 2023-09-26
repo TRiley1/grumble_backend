@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Entity
@@ -33,6 +34,11 @@ public class UserEntity {
     )
     private List<Roles> roles = new ArrayList<>();
 
+    @OneToOne(mappedBy = "user")
+    @JsonIgnoreProperties({"user"})
+    private UserProfile userProfile;
+
+
     @ManyToMany
     @JsonIgnoreProperties({"likingUsers", "dislikingUsers"})
     @JoinTable(
@@ -58,6 +64,8 @@ public class UserEntity {
     public void setRoles(List<Roles> roles) {
         this.roles = roles;
     }
+
+
 
     public UserEntity(String username, String password) {
         this.username = username;
@@ -91,6 +99,14 @@ public class UserEntity {
 
     public Long getId() {
         return id;
+    }
+
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
     }
 
     public void setId(Long id) {

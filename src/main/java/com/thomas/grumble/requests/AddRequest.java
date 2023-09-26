@@ -1,4 +1,4 @@
-package com.thomas.grumble.models;
+package com.thomas.grumble.requests;
 
 import lombok.Data;
 
