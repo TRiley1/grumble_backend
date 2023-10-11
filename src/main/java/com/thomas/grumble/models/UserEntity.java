@@ -129,6 +129,10 @@ public class UserEntity {
         this.dislikedGrumbles = dislikedGrumbles;
     }
 
+    public void deletePassword(){
+
+    }
+
     public UserEntity() {
     }
 }

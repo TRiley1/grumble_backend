@@ -33,11 +33,22 @@ public class Grumble {
     @Column(name = "approval")
     private String approval;
 
+    @Column(name = "subject")
+    private String subject;
+
     public Grumble(UserEntity user, String grumble) {
         this.user = user;
         this.grumble = grumble;
         this.likingUsers = new ArrayList<>();
         this.dislikingUsers = new ArrayList<>();
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public String getApproval() {

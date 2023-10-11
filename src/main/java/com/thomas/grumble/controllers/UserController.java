@@ -6,6 +6,7 @@ import com.thomas.grumble.models.UserProfile;
 import com.thomas.grumble.repositories.UserProfileRepository;
 import com.thomas.grumble.repositories.UserRepository;
 import com.thomas.grumble.requests.EditProfilePicRequest;
+import com.thomas.grumble.requests.UserProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,12 +33,13 @@ import java.util.Optional;
         }
 
         @GetMapping("/users/{username}")
-        public ResponseEntity<UserEntity> getUserById(@PathVariable String username) {
+        public ResponseEntity<UserProjection> getUserById(@PathVariable String username) {
             Optional<UserEntity> optionalUser = userRepository.findByUsername(username);
 
             if (optionalUser.isPresent()) {
                 UserEntity user = optionalUser.get();
-                return new ResponseEntity<>(user, HttpStatus.OK);
+                UserProjection userDTO = new UserProjection(user.getUsername(), user.getId(), user.getGrumbles(), user.getUserProfile(), user.getLikedGrumbles(),user.getDislikedGrumbles());
+                return new ResponseEntity<>(userDTO, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }

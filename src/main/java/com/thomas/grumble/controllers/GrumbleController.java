@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -98,11 +99,13 @@ public class GrumbleController {
             Grumble grumble = new Grumble();
             grumble.setUser(user);
             grumble.setGrumble(addRequest.getContent());
+            grumble.setSubject(addRequest.getSubject());
 
             grumble.setApproval("Pending Approval");
             grumbleRepository.save(grumble);
 
-            return ResponseEntity.ok("Grumble created successfully.");
+
+            return new ResponseEntity<>(grumble.getId(), HttpStatus.OK);
         } else {
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
