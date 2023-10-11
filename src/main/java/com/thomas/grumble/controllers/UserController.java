@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -26,10 +28,15 @@ import java.util.Optional;
         UserProfileRepository userProfileRepository;
 
         @GetMapping(value = "/users")
-        public ResponseEntity<List<UserEntity>> getAllUsers(
+        public ResponseEntity<List<UserProjection>> getAllUsers(
                 @RequestParam(name = "user", required = false) String user
         ){
-            return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
+            List<UserEntity> users = userRepository.findAll();
+            List<UserProjection> usersDTO = users.stream()
+                    .map(userEntity -> new UserProjection(userEntity.getUsername(), userEntity.getId(), userEntity.getGrumbles(), userEntity.getUserProfile(), userEntity.getLikedGrumbles(),userEntity.getDislikedGrumbles()))
+                    .collect(Collectors.toList());
+
+            return new ResponseEntity<>(usersDTO, HttpStatus.OK);
         }
 
         @GetMapping("/users/{username}")
